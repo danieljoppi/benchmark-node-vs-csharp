@@ -6,18 +6,16 @@
   "tooling": {
     "defaultNamespace": "CsharpApplication"
   },
-
   "dependencies": {
     "Microsoft.AspNet.IISPlatformHandler": "1.0.0-rc1-final",
     "Microsoft.AspNet.Mvc": "6.0.0-rc1-final",
     "Microsoft.AspNet.Mvc.ViewFeatures": "6.0.0-rc1-final",
-    "Microsoft.AspNet.Server.Kestrel": "1.0.0-rc1-final"
+    "Microsoft.AspNet.Server.Kestrel": "1.0.0-rc1-final",
+    "CassandraCSharpDriver": "3.0.1"
   },
-
   "commands": {
     "web": "Microsoft.AspNet.Server.Kestrel"
   },
-
   "frameworks": {
     "dnx451": {
       "dependencies": {
@@ -40,7 +38,6 @@
       }
     }
   },
-
   "exclude": [
     "wwwroot",
     "node_modules"
