@@ -15,7 +15,7 @@ namespace csharp.Controllers
             return Json(new { result = value1 * value2 });
         }
 
-        // Sample uri http://localhost:5000/api body {  "value1": 2,   "value2": 2}
+        // Sample uri http://localhost:5000/api/sample body {  "value1": 2,   "value2": 2}
         [HttpPost]
         public IActionResult SamplePostWithDto([FromBody]RequestSampleDto body)
         {
@@ -30,7 +30,7 @@ namespace csharp.Controllers
             return Json(response);
         }
 
-        // Sample uri http://localhost:5000/api/dynamic body {  "value1": 3,   "value2": 2}
+        // Sample uri http://localhost:5000/api/sample/dynamic body {  "value1": 3,   "value2": 2}
         [HttpPost("dynamic")]
         public IActionResult SamplePostWithDynamic([FromBody]dynamic body)
         {

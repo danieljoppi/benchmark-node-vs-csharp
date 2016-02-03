@@ -9,7 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json.Serialization;
 
-namespace EmptyApplication
+namespace csharp
 {
     public class Startup
     {
