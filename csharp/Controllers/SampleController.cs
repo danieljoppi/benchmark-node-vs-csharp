@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNet.Mvc;
+﻿using csharp.Extensions;
+using Microsoft.AspNet.Mvc;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace csharp.Controllers
 {
@@ -12,7 +15,7 @@ namespace csharp.Controllers
             return Json(new { result = value1 * value2 });
         }
 
-        // Sample uri http://localhost:5000/api body 
+        // Sample uri http://localhost:5000/api body {  "value1": 2,   "value2": 2}
         [HttpPost]
         public IActionResult SamplePostWithDto([FromBody]RequestSampleDto body)
         {
@@ -27,6 +30,7 @@ namespace csharp.Controllers
             return Json(response);
         }
 
+        // Sample uri http://localhost:5000/api/dynamic body {  "value1": 3,   "value2": 2}
         [HttpPost("dynamic")]
         public IActionResult SamplePostWithDynamic([FromBody]dynamic body)
         {
@@ -41,6 +45,29 @@ namespace csharp.Controllers
                 return Json(new { result = value1 * value2 });
 
             return HttpBadRequest();
+        }
+
+        [HttpGet("/consuming/{value1}/{value2}")]
+        public async Task<IActionResult> SampleConsumingAnotherPost(int value1, int value2)
+        {
+            if (!ModelState.IsValid)
+                return HttpBadRequest(ModelState);
+
+            var client = new HttpClient();
+
+            var request = new RequestSampleDto
+            {
+                Value1 = value1,
+                Value2 = value2
+            };
+
+            var postResponse = await client.PostAsJsonAsync(@"http://localhost:5000/api/sample", request);
+
+            if (!postResponse.IsSuccessStatusCode)
+                return Json(postResponse);
+
+            var result = await postResponse.Content.ReadAsJsonAsync<ResponseSampleDto>();
+            return Json(result);
         }
     }
 
