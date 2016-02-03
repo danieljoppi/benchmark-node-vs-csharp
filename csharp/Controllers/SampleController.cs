@@ -1,13 +1,21 @@
-﻿using csharp.Extensions;
+﻿using System;
+using csharp.Extensions;
+using csharp.Database;
 using Microsoft.AspNet.Mvc;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace csharp.Controllers
-{
+namespace csharp.Controllers {
+    
     [Route("/api/[controller]")]
-    public class SampleController : Controller
-    {
+    public class SampleController : Controller {
+    
+        DbConfig db;
+        
+        public SampleController() {
+            db = new DbConfig();
+        }
+        
         // Sample uri http://localhost:5000/api/sample/1/2
         [HttpGet("{value1}/{value2}")]
         public IActionResult SampleGet(int value1, int value2)
@@ -36,15 +44,15 @@ namespace csharp.Controllers
         {
             if (!ModelState.IsValid)
                 return HttpBadRequest(ModelState);
+                
+            try {
+                db.insert(body);
 
-            int value1 = 0;
-            int value2 = 0;
-
-            if (int.TryParse(body.value1.ToString(), out value1) &&
-                int.TryParse(body.value2.ToString(), out value2))
-                return Json(new { result = value1 * value2 });
-
-            return HttpBadRequest();
+                return Json(body);
+            } catch (Exception e) {
+                Console.WriteLine("{0} Exception caught.", e);
+                return HttpBadRequest();
+            }
         }
 
         [HttpGet("/consuming/{value1}/{value2}")]
