@@ -9,12 +9,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json.Serialization;
 
-namespace csharp
-{
-    public class Startup
-    {
-        public Startup(IHostingEnvironment env)
-        {
+namespace csharp {
+    public class Startup {
+        public Startup(IHostingEnvironment env) {
             var builder = new ConfigurationBuilder()
                 .AddEnvironmentVariables();
 
@@ -27,11 +24,9 @@ namespace csharp
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app)
-        {
-            app.UseIISPlatformHandler();
+        public void Configure(IApplicationBuilder app) {
+            // app.UseIISPlatformHandler();
             app.UseMvc();
-
         }
 
         // Entry point for the application.

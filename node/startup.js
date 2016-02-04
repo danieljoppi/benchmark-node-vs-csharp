@@ -28,8 +28,7 @@ if (cluster.isMaster) {
     app.use(bodyParser.urlencoded({ extended: false }))
 
     // parse application/json
-    app.use(bodyParser.json());
-
+    app.use(bodyParser.json());	
 
     var api = require('./src/api-controller');
     app.post('/api/dynamic', api.post);

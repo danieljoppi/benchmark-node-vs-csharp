@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using Cassandra;
+using Newtonsoft.Json.Linq;
 
 namespace csharp.Database {
    public class DbConfig {
@@ -13,10 +14,16 @@ namespace csharp.Database {
        }
     
        public void insertTransaction(dynamic data) {
-           // generate UUID
-           data.code = Guid.NewGuid();
+           JObject json = JObject.FromObject(new {
+                // generate UUID
+                code = Guid.NewGuid(),
+                tags = data.tags,
+                values = data.values,
+                address = data.address
+           });
            
-           string sql = "insert into transactions JSON '"+data.ToString()+"'";
+           
+           string sql = "insert into transactions JSON '"+json.ToString()+"'";
            //Console.Write(sql);
             
            session.Execute(sql);

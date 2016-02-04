@@ -11,10 +11,12 @@ namespace csharp.Controllers {
     [Route("/[controller]")]
     public class ApiController : Controller {
     
-        DbConfig db;
+        static DbConfig db;
         
         public ApiController() {
-            db = new DbConfig();
+            if (db == null) {
+                db = new DbConfig();
+            }
         }
 
         // Sample uri http://localhost:5000/api/dynamic
@@ -56,7 +58,7 @@ namespace csharp.Controllers {
                 return Json(body);
             } catch (Exception e) {
                 Console.WriteLine("{0} Exception caught.", e);
-                return HttpBadRequest();
+                return HttpBadRequest(e);
             }
         }
     }
