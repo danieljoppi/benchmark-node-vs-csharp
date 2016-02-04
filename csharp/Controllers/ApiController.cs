@@ -25,7 +25,6 @@ namespace csharp.Controllers {
             }
                 
             try {
-                body.code = Guid.NewGuid();
                 if (body.tags == null || body.tags.Count < 2) {
                     body.tags = new JArray();
                     JArray tags = body.tags;

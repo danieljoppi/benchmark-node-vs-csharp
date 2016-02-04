@@ -13,6 +13,9 @@ namespace csharp.Database {
        }
     
        public void insertTransaction(dynamic data) {
+           // generate UUID
+           data.code = Guid.NewGuid();
+           
            string sql = "insert into transactions JSON '"+data.ToString()+"'";
            //Console.Write(sql);
             
