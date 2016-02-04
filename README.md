@@ -35,4 +35,4 @@ INSERT INTO tags JSON '{"value": 11, "key": "legal"}';
 INSERT INTO tags JSON '{"value": 12, "key": "opa"}';
 INSERT INTO tags JSON '{"value": 15, "key": "joinha"}';
 INSERT INTO tags JSON '{"value": 19, "key": "humm"}';
-``
+```
