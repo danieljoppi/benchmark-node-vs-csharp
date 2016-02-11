@@ -38,22 +38,27 @@ namespace csharp.Controllers {
                     body.values = new JArray();
                 } else {
                     JArray tags = body.tags;
-                    string key1 = tags[0].ToString(),
-                           key2 = tags[1].ToString();
+                    string key1 = tags[0].ToString();
+                    string key2 = tags[1].ToString();
                     
                     JArray values = body.values;
-                    int value1 = 0,
-                        value2 = 0;
+                    int value1 = 0;
+                    int value2 = 0;
                     
                     if (int.TryParse(values[0].ToString(), out value1) &&
                         int.TryParse(values[1].ToString(), out value2)) {
                         
-                        int fact1 = db.findTag(key1),
-                            fact2 = db.findTag(key2);
+                        Task<int> task1 = db.findTagAsync(key1);
+                        Task<int> task2 = db.findTagAsync(key2);
+
+                        Task.WaitAll(task1, task2);
+                        int fact1 = task1.Result;
+                        int fact2 = task2.Result;
+
                         values.Add(value1 * fact1 + value2 * fact2);        
                     }
                 }
-                db.insertTransaction(body);
+                db.insertTransactionAsync(body);
 
                 return Json(body);
             } catch (Exception e) {

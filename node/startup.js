@@ -9,15 +9,15 @@ if (cluster.isMaster) {
 
     console.log('Master cluster setting up ' + numWorkers + ' workers...');
 
-    for(let i = 0; i < numWorkers; i++) {
+    for (let i = 0; i < numWorkers; i++) {
         cluster.fork();
     }
 
-    cluster.on('online', function(worker) {
+    cluster.on('online', function (worker) {
         console.log('Worker ' + worker.process.pid + ' is online');
     });
 
-    cluster.on('exit', function(worker, code, signal) {
+    cluster.on('exit', function (worker, code, signal) {
         console.log('Worker ' + worker.process.pid + ' died with code: ' + code + ', and signal: ' + signal);
         console.log('Starting a new worker');
         cluster.fork();
@@ -25,13 +25,13 @@ if (cluster.isMaster) {
 } else {
     var app = express();
     // parse application/x-www-form-urlencoded
-    app.use(bodyParser.urlencoded({ extended: false }))
+    app.use(bodyParser.urlencoded({ extended: false }));
 
     // parse application/json
-    app.use(bodyParser.json());	
+    app.use(bodyParser.json());
 
     var api = require('./src/api-controller');
-    app.post('/api/dynamic', api.post);
+    app.post('/api/dynamic', api.processTransaction);
 
     app.listen(3000, () => {
         console.log(`Process [${process.pid}]: Now listening on: http://localhost:3000`);
